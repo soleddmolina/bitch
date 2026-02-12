@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>For Clara 💚</title>
+
+<style>
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to top, #a8e6cf, #d0f4de, #e0f7f1);
+  overflow: hidden;
+}
+
+/* Card */
+
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+}
+
+h1 {
+  color: #2f7f6f;
+}
+
+p {
+  color: #444;
+  font-size: 1.1rem;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Game area */
+
+.game-area {
+  position: relative;
+  height: 260px;
+  margin-top: 1rem;
+  background: #f0f8f5;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+}
+
+/* Paper */
+
+.paper {
+  width: 150px;     /* bigger */
+  position: absolute;
+  top: 5px;         /* very high start */
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: grab;
+  user-select: none;
+}
+
+/* Bins */
+
+.bin-container {
+  position: absolute;
+  bottom: 5px;
+  text-align: center;
+  width: 90px;
+}
+
+#yesBin {
+  left: 15px;
+}
+
+#noBin {
+  right: 15px;
+}
+
+.bin-img {
+  width: 80px;
+  display: block;
+  margin: 0 auto;
+}
+
+.bin-label {
+  margin-top: 3px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.yes {
+  color: #2f7f6f;
+}
+
+.no {
+  color: #b33a3a;
+}
+
+/* Message */
+
+.message {
+  display: none;
+  margin-top: 1.5rem;
+  font-size: 1.3rem;
+  color: #2f7f6f;
+  font-weight: 600;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Hola Clara 💚</h1>
+
+<p>Is it me the only person u wanna try cum comee* on a whatever-but-valentine's date? 🌿✨</p>
+
+<!-- YouTube -->
+
+<iframe width="100%" height="200"
+src="https://www.youtube.com/embed/bJ8Dc585nxI?autoplay=1&mute=1"
+allow="autoplay; encrypted-media"
+allowfullscreen>
+</iframe>
+
+<!-- ECO GAME -->
+
+<div class="game-area" id="gameArea">
+
+<!-- Paper -->
+
+<img src="https://www.nicepng.com/png/detail/369-3695222_crumpled-paper-ball-png.png"
+class="paper" id="paper" />
+
+<!-- YES BIN -->
+
+<div class="bin-container" id="yesBin">
+  <img src="https://www.pngkit.com/png/detail/355-3553154_papelera-de-reciclaje-icon-recycle-label.png"
+       class="bin-img" />
+  <div class="bin-label yes">YES 💚</div>
+</div>
+
+<!-- NO BIN -->
+
+<div class="bin-container" id="noBin">
+  <img src="https://www.clipartmax.com/png/small/282-2828536_trash-bin-free-icon-recycling-bin.png"
+       class="bin-img" />
+  <div class="bin-label no"> NO / Méchante </div>
+</div>
+
+</div>
+
+<!-- MESSAGE FOR CLARA -->
+
+<div class="message" id="message">
+
+Waaah!! Trop chaud!! <br><br>
+
+But please let me know the day by message because i couldn't add here a cute calendar🌍💫
+
+</div>
+
+</div>
+
+
+<script>
+
+/* Elements */
+
+const paper = document.getElementById("paper");
+const yesBin = document.getElementById("yesBin");
+const noBin = document.getElementById("noBin");
+const gameArea = document.getElementById("gameArea");
+const message = document.getElementById("message");
+
+/* Drag */
+
+let offsetX, offsetY, dragging = false;
+
+paper.addEventListener("mousedown", startDrag);
+paper.addEventListener("touchstart", startDrag);
+
+function startDrag(e) {
+
+  dragging = true;
+
+  const rect = paper.getBoundingClientRect();
+
+  const x = e.touches ? e.touches[0].clientX : e.clientX;
+  const y = e.touches ? e.touches[0].clientY : e.clientY;
+
+  offsetX = x - rect.left;
+  offsetY = y - rect.top;
+}
+
+document.addEventListener("mousemove", drag);
+document.addEventListener("touchmove", drag);
+
+function drag(e) {
+
+  if (!dragging) return;
+
+  const rect = gameArea.getBoundingClientRect();
+
+  const x = e.touches ? e.touches[0].clientX : e.clientX;
+  const y = e.touches ? e.touches[0].clientY : e.clientY;
+
+  let newX = x - rect.left - offsetX;
+  let newY = y - rect.top - offsetY;
+
+  newX = Math.max(0, Math.min(rect.width - paper.offsetWidth, newX));
+  newY = Math.max(0, Math.min(rect.height - paper.offsetHeight, newY));
+
+  paper.style.left = newX + "px";
+  paper.style.top = newY + "px";
+
+  checkCollision();
+}
+
+document.addEventListener("mouseup", stopDrag);
+document.addEventListener("touchend", stopDrag);
+
+function stopDrag() {
+  dragging = false;
+}
+
+/* Collision */
+
+function checkCollision() {
+
+  const p = paper.getBoundingClientRect();
+  const yes = yesBin.getBoundingClientRect();
+  const no = noBin.getBoundingClientRect();
+
+  // YES
+  if (!(p.right < yes.left || p.left > yes.right ||
+        p.bottom < yes.top || p.top > yes.bottom)) {
+
+    celebrate();
+  }
+
+  // NO
+  if (!(p.right < no.left || p.left > no.right ||
+        p.bottom < no.top || p.top > no.bottom)) {
+
+    moveNoBin();
+  }
+}
+
+/* Move NO bin */
+
+function moveNoBin() {
+
+  const maxX = gameArea.clientWidth - noBin.offsetWidth;
+  const maxY = gameArea.clientHeight - noBin.offsetHeight;
+
+  noBin.style.left = Math.random() * maxX + "px";
+  noBin.style.top = Math.random() * maxY + "px";
+}
+
+/* Success */
+
+function celebrate() {
+
+  gameArea.style.display = "none";
+  message.style.display = "block";
+}
+
+</script>
+
+</body>
+</html>
