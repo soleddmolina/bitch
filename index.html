@@ -1,0 +1,177 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Feb 12 16:39:36 2026
+
+@author: mmolinag
+"""
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Clara 💚</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #a8e6cf, #56ab91);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+    .card {
+      background: white;
+      padding: 2.5rem 2rem;
+      border-radius: 24px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      max-width: 420px;
+      width: 90%;
+      position: relative;
+    }
+    h1 {
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+      color: #2f7f6f;
+    }
+    p {
+      margin-bottom: 1rem;
+      color: #444;
+      font-size: 1.1rem;
+    }
+    .youtube-box {
+      margin: 1rem 0;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .hint {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+    .buttons {
+      position: relative;
+      height: 140px;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    button {
+      border: none;
+      padding: 0.9rem 1.8rem;
+      font-size: 1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: absolute;
+    }
+    #yesBtn {
+      background: #2f7f6f;
+      color: white;
+      left: 50%;
+      top: 20px;
+      transform: translateX(-120%);
+      z-index: 2;
+    }
+    #noBtn {
+      background: #d9efe7;
+      color: #2f7f6f;
+      left: 50%;
+      top: 20px;
+      transform: translateX(20%);
+      z-index: 2;
+    }
+    #yesBtn:hover {
+      background: #25695c;
+      transform: translateX(-120%) scale(1.05);
+    }
+    .message {
+      display: none;
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      color: #2f7f6f;
+      font-weight: 600;
+    }
+    .backup-link {
+      margin-top: 0.5rem;
+      display: block;
+      color: #2f7f6f;
+      text-decoration: underline;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Hola Clara 💚</h1>
+    <p>Do u wanna NOT be my valentine date and choose any other day of the week to meet again? 🌿✨</p>
+
+    <div class="hint">
+      Tap ▶ to start the song 💚
+    </div>
+
+    <!-- Embedded YouTube -->
+    <div class="youtube-box">
+      <iframe
+        width="100%"
+        height="200"
+        src="https://www.youtube.com/embed/bJ8Dc585nxI?autoplay=1&mute=1"
+        title="Odezenne - Bitch"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <!-- Backup link in case embed doesn't work -->
+    <a class="backup-link" href="https://www.youtube.com/watch?v=bJ8Dc585nxI" target="_blank">
+      Click here if the music doesn’t play
+    </a>
+
+    <div class="buttons" id="buttons">
+      <button id="yesBtn">Yes 💚</button>
+      <button id="noBtn">No 🙈</button>
+    </div>
+
+    <div class="message" id="message">
+      Waaah!! Trop chaud!!  💫💚<br />
+      Please let me know by message because i suck at coding and I can't see your response.
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const message = document.getElementById("message");
+    const buttons = document.getElementById("buttons");
+
+    function moveNoButton() {
+      const containerWidth = buttons.clientWidth;
+      const containerHeight = buttons.clientHeight;
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+
+      const maxX = containerWidth - btnWidth;
+      const maxY = containerHeight - btnHeight;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+      noBtn.style.transform = "translate(0, 0)";
+    }
+
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("touchstart", moveNoButton);
+
+    yesBtn.addEventListener("click", () => {
+      message.style.display = "block";
+      buttons.style.display = "none";
+    });
+  </script>
+</body>
+</html>
